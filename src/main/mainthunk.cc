@@ -26,8 +26,8 @@
 #include "main/main.h"
 
 #if (defined(_WIN32) || defined(_WIN64)) && defined(_M_AMD64)
-#define USE_SENTRY
-#include "sentry.h"
+//#define USE_SENTRY
+//#include "sentry.h"
 #endif
 
 static void setupSentry() {
