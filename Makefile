@@ -3,7 +3,11 @@ BUILD ?= Release
 DESTDIR ?= /usr/local
 CROSS ?= none
 
-UNAME_S := $(shell uname -s)
+UNAME_S := $(uname -s)
+ifeq (,$(findstring MINGW,UNAME_S))
+UNAME_S := MINGW
+CPPFLAGS+=-DUNICODE
+endif
 UNAME_M := $(shell uname -m)
 rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 CC_IS_CLANG := $(shell $(CC) --version | grep -q clang && echo true || echo false)
@@ -76,6 +80,8 @@ LDFLAGS += `pkg-config --libs $(PACKAGES)`
 ifeq ($(UNAME_S),Darwin)
     LDFLAGS += -lc++ -framework GLUT -framework OpenGL -framework CoreFoundation -framework Cocoa
     LDFLAGS += -mmacosx-version-min=10.15
+else ifeq ($(UNAME_S),MINGW)
+	LDFLAGS += -lstdc++fs -lshlwapi -municode -lwindowscodecs -lgdi32 
 else
     LDFLAGS += -lstdc++fs
     LDFLAGS += -lGL -lX11 -lxcb
@@ -142,6 +148,8 @@ SRCS += third_party/zep/src/mcommon/file/path.cpp
 SRCS += third_party/zep/src/mcommon/string/stringutils.cpp
 ifeq ($(UNAME_S),Darwin)
     SRCS += src/main/complain.mm third_party/clip/clip_osx.mm
+else ifeq ($(UNAME_S),MINGW)
+    SRCS += third_party/clip/clip_win.cpp
 else
     SRCS += third_party/clip/clip_x11.cpp
 endif

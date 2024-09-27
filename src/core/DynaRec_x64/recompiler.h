@@ -324,7 +324,7 @@ class DynaRecCPU final : public PCSX::R3000Acpu {
         void* functionPtr;
         uintptr_t thisPtr = reinterpret_cast<uintptr_t>(thisObject);
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+#if !defined(__MINGW64__) && (defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__))
         static_assert(sizeof(T) == 8, "[x64 JIT] Invalid size for member function pointer");
         std::memcpy(&functionPtr, &func, sizeof(T));
 #else
