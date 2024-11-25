@@ -140,7 +140,7 @@ bool PCSX::Update::applyUpdate(const std::filesystem::path& binDir) {
     str = (wchar_t*)_malloca(needed * sizeof(wchar_t));
     MultiByteToWideChar(CP_UTF8, 0, cmd.c_str(), -1, str, needed);
 #else
-    char* str = cmd.c_str();
+    char* str = cmd.data();
 #endif
     PROCESS_INFORMATION processInformation = {0};
     STARTUPINFO startupInfo = {0};
