@@ -100,7 +100,7 @@ LDFLAGS_ubsan += -fsanitize=undefined
 LDFLAGS_lto += -O3 -flto=auto -flto-partition=one
 
 CPPFLAGS += $(CPPFLAGS_$(BUILD)) -pthread
-LDFLAGS += $(LDFLAGS_$(BUILD)) -pthread
+LDFLAGS += $(LDFLAGS_$(BUILD)) -pthread -Wl,--subsystem,console
 
 ifeq ($(CROSS),arm64)
     CPPFLAGS += -fPIC -Wl,-rpath-link,/opt/cross/sysroot/usr/lib/aarch64-linux-gnu -L/opt/cross/sysroot/usr/lib/aarch64-linux-gnu
