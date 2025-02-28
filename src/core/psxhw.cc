@@ -21,6 +21,7 @@
 
 #include <stdint.h>
 
+#include "core/bufferedlog.h"
 #include "core/cdrom.h"
 #include "core/debug.h"
 #include "core/gpu.h"
@@ -792,6 +793,11 @@ void PCSX::HW::write32(uint32_t add, uint32_t value) {
             g_system->message("%s", memFile->gets<false>());
             break;
         }
+		case 0x1f802100: { 
+			PSXHW_LOG("Log buffer ptr set to %x\n", value);
+			g_emulator->m_logBuffer->setAddress(value);
+			break;
+		}
         default: {
             if ((hwadd >= 0x1f801c00) && (hwadd < 0x1f801e00)) {
                 write16(add, value & 0xffff);

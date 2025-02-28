@@ -19,6 +19,7 @@
 
 #include "core/psxemulator.h"
 
+#include "core/bufferedlog.h"
 #include "core/callstacks.h"
 #include "core/cdrom.h"
 #include "core/debug.h"
@@ -74,7 +75,8 @@ PCSX::Emulator::Emulator()
       m_sio1Server(new PCSX::SIO1Server()),
       m_sio1Client(new PCSX::SIO1Client()),
       m_spu(new PCSX::SPU::impl()),
-      m_webServer(new PCSX::WebServer()) {
+      m_webServer(new PCSX::WebServer()),
+	  m_logBuffer(new PCSX::BufferedLog()) {
     auto L = *m_lua;
     L.openlibs();
 }

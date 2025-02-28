@@ -89,6 +89,7 @@ class SIO1;
 class SIO1Server;
 class SIO1Client;
 class PIOCart;
+class BufferedLog;
 
 class Emulator;
 extern Emulator* g_emulator;
@@ -274,7 +275,7 @@ class Emulator {
     std::unique_ptr<SIO1Client> m_sio1Client;
     std::unique_ptr<SPUInterface> m_spu;
     std::unique_ptr<WebServer> m_webServer;
-
+	std::unique_ptr<BufferedLog> m_logBuffer;
   private:
     PcsxConfig m_config;
 };
