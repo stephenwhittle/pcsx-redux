@@ -11,10 +11,6 @@ add_subdirectory(support)
 add_subdirectory(supportpsx)
 
 target_include_directories(pcsx-redux PRIVATE ${CMAKE_CURRENT_LIST_DIR})
-target_compile_definitions(pcsx-redux PRIVATE 
-    -DIMGUI_IMPL_OPENGL_LOADER_GL3W 
-    -DIMGUI_ENABLE_FREETYPE
-    -DZEP_FEATURE_CPP_FILE_SYSTEM
-    -DNVG_NO_STB
-    -DPB_STATIC_API
-)
+target_link_libraries(pcsx-redux PRIVATE fmt libuv::libuv zlibstatic misc_third_party imgui_core imgui_filedialog uv_a CURL::libcurl)
+
+message(STATUS "curl" ${CURL_INCLUDE_DIRS})

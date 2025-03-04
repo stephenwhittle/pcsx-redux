@@ -1,0 +1,2 @@
+add_library(misc_third_party INTERFACE)
+target_include_directories(misc_third_party INTERFACE ${CMAKE_CURRENT_LIST_DIR})
