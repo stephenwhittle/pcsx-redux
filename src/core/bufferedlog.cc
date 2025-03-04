@@ -2,6 +2,7 @@
 
 #include "core/psxemulator.h"
 #include "core/psxmem.h"
+#include <algorithm>
 
 void PCSX::BufferedLog::setAddress(uint32_t bufPtr) 
 {
@@ -9,7 +10,7 @@ void PCSX::BufferedLog::setAddress(uint32_t bufPtr)
     m_bufferData = reinterpret_cast<const char*>(PCSX::g_emulator->m_mem->pointerRead(bufPtr + sizeof(BufferState)));
 }
 
-uint16_t PCSX::BufferedLog::avail() const {
+uint32_t PCSX::BufferedLog::avail() const {
     if (m_bufferState == nullptr) {
         return 0;
     }
@@ -17,12 +18,13 @@ uint16_t PCSX::BufferedLog::avail() const {
     return m_bufferState->m_written - m_bufferState->m_read;
 }
 
-uint16_t PCSX::BufferedLog::read(std::span<const char> destBuf) {
+uint32_t PCSX::BufferedLog::read(std::span<const char> destBuf) {
     if (m_bufferState == nullptr) {
         return 0;
     }
-    //get min of available and span size
-    //std::copy between m_bufferData and destBuf
-    //increment the consumed value
+    uint32_t ReadAmount = std::min<uint32_t>(avail(), destBuf.size());
+    std::copy_n(m_bufferData[m_bufferState->m_read], ReadAmount, destBuf);
+    m_bufferState->m_read += ReadAmount;
+    
     return 0;
 }

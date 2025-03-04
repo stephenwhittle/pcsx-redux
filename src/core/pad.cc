@@ -591,6 +591,7 @@ void PadsImpl::Pad::getButtons() {
     if (inputType == InputType::Keyboard) {
         pad.buttonStatus = getKeyboardButtons();
         pad.leftJoyX = pad.rightJoyX = pad.leftJoyY = pad.rightJoyY = 0x80;
+		PCSX::g_system->log(PCSX::LogClass::SIO0, _("PadValue: %02X\n"), pad.buttonStatus);
         return;
     }
 

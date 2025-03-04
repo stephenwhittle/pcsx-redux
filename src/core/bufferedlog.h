@@ -9,17 +9,18 @@ namespace PCSX {
 	// to prevent data being mutated out from under us
 	class BufferedLog{
 		struct BufferState{
-			uint16_t m_size;
-			uint16_t m_written;
-			uint16_t m_read;
+			uint32_t m_size;
+			uint32_t m_written;
+			uint32_t m_read;
+			uint32_t m_watermark;
 		};
-		const BufferState* m_bufferState = nullptr;
+		BufferState* m_bufferState = nullptr;
 		const char* m_bufferData = nullptr;
 		public:
 		
 		void setAddress(uint32_t bufPtr);
-		uint16_t avail() const;
-		uint16_t read(std::span<const char> destBuf);
+		uint32_t avail() const;
+		uint32_t read(std::span<const char> destBuf);
 	};
 	
 }

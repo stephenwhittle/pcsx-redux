@@ -1087,6 +1087,23 @@ void PCSX::GUI::endFrame() {
         } else {
             m_outputShaderEditor.renderWithImgui(this, texture, m_renderSize, logicalRenderSize);
         }
+        
+        ImGui::SetCursorPos(ImVec2{50,50});
+        ImGui::PushStyleColor(ImGuiCol_ChildBg, 0x10000000);
+        if (ImGui::BeginChild("BufferedLog", ImVec2{320, 320}, ImGuiChildFlags_None, ImGuiWindowFlags_NoScrollbar))
+        {
+            
+        }
+        ImGui::EndChild();
+        ImGui::SetCursorPos(ImGui::GetWindowSize() - ImVec2{325,325});
+        if (ImGui::BeginChild("ChartRegion", ImVec2{320, 320}, ImGuiChildFlags_None, ImGuiWindowFlags_NoScrollbar))
+        {
+            //ImGui::TextUnformatted("Placeholder text for chart area");
+        }
+        ImGui::EndChild();
+        
+        ImGui::PopStyleColor();
+        
         ImGui::End();
         ImGui::PopStyleVar(2);
     } else {

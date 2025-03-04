@@ -150,23 +150,23 @@ uint16_t PCSX::HW::read16(uint32_t add) {
         case 0x1f801040:
             hard = g_emulator->m_sio->read8();
             hard |= g_emulator->m_sio->read8() << 8;
-            SIO0_LOG("sio read16 %x; ret = %x\n", add & 0xf, hard);
+            //SIO0_LOG("sio read16 %x; ret = %x\n", add & 0xf, hard);
             break;
         case 0x1f801044:
             hard = g_emulator->m_sio->readStatus16();
-            SIO0_LOG("sio read16 %x; ret = %x\n", add & 0xf, hard);
+            //SIO0_LOG("sio read16 %x; ret = %x\n", add & 0xf, hard);
             break;
         case 0x1f801048:
             hard = g_emulator->m_sio->readMode16();
-            SIO0_LOG("sio read16 %x; ret = %x\n", add & 0xf, hard);
+            //SIO0_LOG("sio read16 %x; ret = %x\n", add & 0xf, hard);
             break;
         case 0x1f80104a:
             hard = g_emulator->m_sio->readCtrl16();
-            SIO0_LOG("sio read16 %x; ret = %x\n", add & 0xf, hard);
+            //SIO0_LOG("sio read16 %x; ret = %x\n", add & 0xf, hard);
             break;
         case 0x1f80104e:
             hard = g_emulator->m_sio->readBaud16();
-            SIO0_LOG("sio read16 %x; ret = %x\n", add & 0xf, hard);
+            //SIO0_LOG("sio read16 %x; ret = %x\n", add & 0xf, hard);
             break;
         case 0x1f801050:  // rx/tx data register
             hard = g_emulator->m_sio1->readData16();
@@ -276,11 +276,11 @@ uint32_t PCSX::HW::read32(uint32_t add) {
             hard |= g_emulator->m_sio->read8() << 8;
             hard |= g_emulator->m_sio->read8() << 16;
             hard |= g_emulator->m_sio->read8() << 24;
-            SIO0_LOG("sio read32 ;ret = %x\n", hard);
+            //SIO0_LOG("sio read32 ;ret = %x\n", hard);
             break;
         case 0x1f801050:  // rx/tx data register
             hard = g_emulator->m_sio1->readData32();
-            SIO1_LOG("SIO1.DATA read32 ;ret = %x\n", hard);
+            //SIO1_LOG("SIO1.DATA read32 ;ret = %x\n", hard);
             break;
         case 0x1f801054:  // stat register
             hard = g_emulator->m_sio1->readStat32();
@@ -478,31 +478,31 @@ void PCSX::HW::write16(uint32_t add, uint32_t rawvalue) {
     switch (hwadd) {
         case 0x1f801040:
             g_emulator->m_sio->write8((uint8_t)value);  // 8-bit reg, ignore upper 8 bits
-            SIO0_LOG("sio write16 %x, %x\n", add & 0xf, value);
+            //SIO0_LOG("sio write16 %x, %x\n", add & 0xf, value);
             break;
         case 0x1f801044:
             g_emulator->m_sio->writeStatus16(value);
-            SIO0_LOG("sio write16 %x, %x\n", add & 0xf, value);
+            //SIO0_LOG("sio write16 %x, %x\n", add & 0xf, value);
             break;
         case 0x1f801048:
             g_emulator->m_sio->writeMode16(value);
-            SIO0_LOG("sio write16 %x, %x\n", add & 0xf, value);
+            //SIO0_LOG("sio write16 %x, %x\n", add & 0xf, value);
             break;
         case 0x1f80104a:  // control register
             g_emulator->m_sio->writeCtrl16(value);
-            SIO0_LOG("sio write16 %x, %x\n", add & 0xf, value);
+            //SIO0_LOG("sio write16 %x, %x\n", add & 0xf, value);
             break;
         case 0x1f80104e:  // baudrate register
             g_emulator->m_sio->writeBaud16(value);
-            SIO0_LOG("sio write16 %x, %x\n", add & 0xf, value);
+            //SIO0_LOG("sio write16 %x, %x\n", add & 0xf, value);
             break;
         case 0x1f801050:                                     // rx/tx data register
             g_emulator->m_sio1->writeData8((uint8_t)value);  // 8-bit reg, ignore upper 8 bits
-            SIO1_LOG("SIO1.DATA write16 %x, %x\n", add & 0xf, value);
+            //SIO1_LOG("SIO1.DATA write16 %x, %x\n", add & 0xf, value);
             break;
         case 0x1f801054:  // stat register
             g_emulator->m_sio1->writeStat16(value);
-            SIO1_LOG("SIO1.STAT write16 %x, %x\n", add & 0xf, value);
+            //SIO1_LOG("SIO1.STAT write16 %x, %x\n", add & 0xf, value);
             break;
         case 0x1f801058:  // mode register
             g_emulator->m_sio1->writeMode16(value);

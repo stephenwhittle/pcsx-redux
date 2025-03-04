@@ -105,6 +105,8 @@ void PCSX::SIO::reset() {
 }
 
 void PCSX::SIO::writePad(uint8_t value) {
+	SIO0_LOG("sio writePad %x (PAR:%x PAD:%x)\n", value, m_bufferIndex, m_padState);
+
     switch (m_padState) {
         case Pads::PAD_STATE_IDLE:                          // start pad
             m_regs.status |= StatusFlags::RX_FIFONOTEMPTY;  // Transfer is Ready
@@ -251,7 +253,7 @@ void PCSX::SIO::transmitData() {
 }
 
 void PCSX::SIO::write8(uint8_t value) {
-    SIO0_LOG("sio write8 %x (PAR:%x PAD:%x)\n", value, m_bufferIndex, m_padState);
+    //SIO0_LOG("sio write8 %x (PAR:%x PAD:%x)\n", value, m_bufferIndex, m_padState);
 
     m_regs.data = value;
     m_regs.status &= ~StatusFlags::TX_DATACLEAR;
@@ -274,7 +276,7 @@ void PCSX::SIO::writeCtrl16(uint16_t value) {
 
     m_regs.control = value;
 
-    SIO0_LOG("sio ctrlwrite16 %x (PAR:%x PAD:%x)\n", value, m_bufferIndex, m_padState);
+    //SIO0_LOG("sio ctrlwrite16 %x (PAR:%x PAD:%x)\n", value, m_bufferIndex, m_padState);
 
     if (selected && (m_regs.control & ControlFlags::TX_IRQEN) && !(m_regs.status & StatusFlags::IRQ)) {
         scheduleInterrupt(SIO_CYCLES);
@@ -333,9 +335,9 @@ uint8_t PCSX::SIO::read8() {
         updateFIFOStatus();
     }
 
-    SIO0_LOG("sio read8 ;ret = %x (I:%x ST:%x BUF:(%x %x %x))\n", ret, m_bufferIndex, m_regs.status,
-             m_buffer[m_bufferIndex > 0 ? m_bufferIndex - 1 : 0], m_buffer[m_bufferIndex],
-             m_buffer[m_bufferIndex < c_padBufferSize - 1 ? m_bufferIndex + 1 : c_padBufferSize - 1]);
+    //SIO0_LOG("sio read8 ;ret = %x (I:%x ST:%x BUF:(%x %x %x))\n", ret, m_bufferIndex, m_regs.status,
+    //         m_buffer[m_bufferIndex > 0 ? m_bufferIndex - 1 : 0], m_buffer[m_bufferIndex],
+    //         m_buffer[m_bufferIndex < c_padBufferSize - 1 ? m_bufferIndex + 1 : c_padBufferSize - 1]);
 
     g_emulator->m_mem->writeHardwareRegister<0x1040, uint8_t>(ret);
 

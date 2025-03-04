@@ -1,0 +1,21 @@
+target_sources(pcsx-redux PRIVATE
+	${CMAKE_CURRENT_LIST_DIR}/binpath-linux.cc
+	${CMAKE_CURRENT_LIST_DIR}/binpath-macos.cc
+	${CMAKE_CURRENT_LIST_DIR}/binpath-windows.cc
+	${CMAKE_CURRENT_LIST_DIR}/container-file.cc
+	${CMAKE_CURRENT_LIST_DIR}/ffmpeg-audio-file.cc
+	${CMAKE_CURRENT_LIST_DIR}/file.cc
+	${CMAKE_CURRENT_LIST_DIR}/md5.cc
+	${CMAKE_CURRENT_LIST_DIR}/mem4g.cc
+	${CMAKE_CURRENT_LIST_DIR}/sharedmem-unix.cc
+	${CMAKE_CURRENT_LIST_DIR}/sharedmem-windows.cc
+	${CMAKE_CURRENT_LIST_DIR}/sharedmem.cc
+	${CMAKE_CURRENT_LIST_DIR}/sjis_conv.cc
+	${CMAKE_CURRENT_LIST_DIR}/uvfile.cc
+	${CMAKE_CURRENT_LIST_DIR}/version-linux.cc
+	${CMAKE_CURRENT_LIST_DIR}/version-macos.cc
+	${CMAKE_CURRENT_LIST_DIR}/version-windows.cc
+	${CMAKE_CURRENT_LIST_DIR}/version.cc
+	${CMAKE_CURRENT_LIST_DIR}/zfile.cc
+	${CMAKE_CURRENT_LIST_DIR}/zip.cc
+)

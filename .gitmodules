@@ -69,7 +69,7 @@
 	url = https://github.com/grumpycoders/vixl
 [submodule "third_party/md4c"]
 	path = third_party/md4c
-	url = https://github.com/mity/md4c.git
+	url = https://github.com/stephenwhittle/md4c.git
 [submodule "third_party/imgui_md"]
 	path = third_party/imgui_md
 	url = https://github.com/mekhontsev/imgui_md.git

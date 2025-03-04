@@ -1,0 +1,11 @@
+if (NOT GIT_EXECUTABLE)
+find_package(Git)
+endif()
+
+add_subdirectory(capstone EXCLUDE_FROM_ALL)
+add_subdirectory(freetype EXCLUDE_FROM_ALL)
+add_subdirectory(curl EXCLUDE_FROM_ALL)
+add_subdirectory(md4c EXCLUDE_FROM_ALL)
+add_subdirectory(fmt EXCLUDE_FROM_ALL)
+include(imgui.cmake)
+include(glfw.cmake)

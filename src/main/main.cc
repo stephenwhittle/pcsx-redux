@@ -465,6 +465,5 @@ runner.init({
             throw;
         }
     }
-
     return exitCode;
 }
