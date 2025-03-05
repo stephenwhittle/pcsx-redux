@@ -254,7 +254,7 @@ enum ShaderType {
 
 struct Shader {
     Shader() {}
-    Shader(const std::string_view source, ShaderType type) { create(source, static_cast<GLenum>(type)); }
+    Shader(const std::string_view source, ShaderType type) { (void) create(source, static_cast<GLenum>(type)); }
     ~Shader() {
         if (exists()) glDeleteShader(m_handle);
     }

@@ -29,12 +29,15 @@ SOFTWARE.
 #include <map>
 #include <string>
 
+#include "core/logger.h"
+#include "core/system.h"
 #include "elfio/elfio.hpp"
 #include "fmt/format.h"
 #include "support/file.h"
 #include "support/stream-file.h"
 #include "support/strings-helpers.h"
 #include "support/zfile.h"
+#include "core/system.h"
 
 namespace PCSX {
 
@@ -220,6 +223,8 @@ bool loadELF(IO<File> file, IO<File> dest, BinaryLoader::Info& info, std::map<ui
     if (!reader.load(stream)) return false;
     if (reader.get_class() != ELFCLASS32) return false;
 
+    g_system->log(LogClass::UI, "Start ELF load\n");
+
     info.pc = reader.get_entry();
 
     Elf_Half sec_num = reader.sections.size();
@@ -246,6 +251,7 @@ bool loadELF(IO<File> file, IO<File> dest, BinaryLoader::Info& info, std::map<ui
 
         auto type = psec->get_type();
         if (type != SHT_SYMTAB) continue;
+        g_system->log(LogClass::UI, "Parsing ELF symbols for section %s\n", name.c_str());
         const ELFIO::symbol_section_accessor symbolstab(reader, psec);
         for (unsigned s = 0; s < symbolstab.get_symbols_num(); s++) {
             std::string name;
@@ -257,6 +263,7 @@ bool loadELF(IO<File> file, IO<File> dest, BinaryLoader::Info& info, std::map<ui
             unsigned char other;
             symbolstab.get_symbol(s, name, value, size, bind, type, section_index, other);
             symbols[value] = name;
+            g_system->log(LogClass::UI, "Found symbol %s\n", name.c_str());
         }
     }
 
@@ -268,18 +275,23 @@ bool loadELF(IO<File> file, IO<File> dest, BinaryLoader::Info& info, std::map<ui
 }  // namespace PCSX
 
 bool PCSX::BinaryLoader::load(IO<File> in, IO<File> dest, Info& info, std::map<uint32_t, std::string>& symbols) {
+    g_system->log(LogClass::UI, "Start loading binary %s\n", in->filename().generic_string().c_str());
     {
         IO<File> ny(new PosixFile(in->filename().parent_path() / "libps.exe"));
         if (!ny->failed()) loadPSEXE(ny, dest, info, symbols);
     }
 
     if (in->failed()) return false;
+    g_system->log(LogClass::UI, "Start loading cpe\n");
     if (loadCPE(in, dest, info, symbols)) return true;
     in->rSeek(0, SEEK_SET);
+    g_system->log(LogClass::UI, "Start loading psexe\n");
     if (loadPSEXE(in, dest, info, symbols)) return true;
     in->rSeek(0, SEEK_SET);
+    g_system->log(LogClass::UI, "Start loading psf\n");
     if (loadPSF(in, dest, info, symbols)) return true;
     in->rSeek(0, SEEK_SET);
+    g_system->log(LogClass::UI, "Start loading elf\n");
     if (loadELF(in, dest, info, symbols)) return true;
     return false;
 }

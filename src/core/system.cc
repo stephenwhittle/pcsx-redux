@@ -26,6 +26,9 @@
 
 #include "support/file.h"
 
+#define PCSX_STR_IMPL(s) #s
+#define PCSX_STR(s) PCSX_STR_IMPL(s)
+
 PCSX::System* PCSX::g_system = NULL;
 
 static const ImWchar c_frenchRanges[] = {0x0020, 0x00ff, 0x0152, 0x0153, 0};
@@ -292,6 +295,11 @@ bool PCSX::System::findResource(std::function<bool(const std::filesystem::path& 
     // And if it's in a subfolder - that's the Window / Visual Studio way.
     if (walker(m_binDir / ".." / ".." / sourcePath / name)) return true;
     if (walker(m_binDir / ".." / ".." / ".." / sourcePath / name)) return true;
+    
+    // If none of those work, maybe we're in an out-of-tree build
+#ifdef PCSX_SRC_ROOT_DIR
+    if (walker(PCSX_STR(PCSX_SRC_ROOT_DIR) / sourcePath / name)) return true;
+#endif
 
     // No luck here...
     return false;

@@ -57,7 +57,7 @@
 #include "gui/widgets/sio1.h"
 #include "gui/widgets/vram-viewer.h"
 #include "imgui.h"
-#include "imgui_md/imgui_md.h"
+#include "imgui_md.h"
 #include "imgui_memory_editor/imgui_memory_editor.h"
 #include "magic_enum/include/magic_enum/magic_enum_all.hpp"
 #include "support/eventbus.h"

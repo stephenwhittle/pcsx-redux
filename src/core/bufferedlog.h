@@ -20,7 +20,7 @@ namespace PCSX {
 		
 		void setAddress(uint32_t bufPtr);
 		uint32_t avail() const;
-		uint32_t read(std::span<const char> destBuf);
+		uint32_t read(std::span<char> destBuf);
 	};
 	
 }

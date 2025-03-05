@@ -41,4 +41,15 @@ target_sources(pcsx-redux PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}/system.cc
 	${CMAKE_CURRENT_LIST_DIR}/ui.cc
 	${CMAKE_CURRENT_LIST_DIR}/web-server.cc
+	${CMAKE_CURRENT_LIST_DIR}/DynaRec_aa64/gte_aa64.cc
+	${CMAKE_CURRENT_LIST_DIR}/DynaRec_aa64/instructions.cc
+	${CMAKE_CURRENT_LIST_DIR}/DynaRec_aa64/recompiler.cc
+	${CMAKE_CURRENT_LIST_DIR}/DynaRec_aa64/regAllocation.cc
+	${CMAKE_CURRENT_LIST_DIR}/DynaRec_x64/gte_x64.cc
+	${CMAKE_CURRENT_LIST_DIR}/DynaRec_x64/instructions.cc
+	${CMAKE_CURRENT_LIST_DIR}/DynaRec_x64/profiler.cc
+	${CMAKE_CURRENT_LIST_DIR}/DynaRec_x64/recompiler.cc
+	${CMAKE_CURRENT_LIST_DIR}/DynaRec_x64/regAllocation.cc
+	${CMAKE_CURRENT_LIST_DIR}/DynaRec_x64/symbols.cc
+	${CMAKE_CURRENT_LIST_DIR}/OpenGL_GPU/gpu_opengl.cc
 )

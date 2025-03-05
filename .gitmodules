@@ -51,7 +51,7 @@
 	url = https://github.com/herumi/xbyak
 [submodule "third_party/zep"]
 	path = third_party/zep
-	url = https://github.com/grumpycoders/zep.git
+	url = https://github.com/stephenwhittle/zep.git
 [submodule "third_party/miniaudio"]
 	path = third_party/miniaudio
 	url = https://github.com/mackron/miniaudio.git
@@ -94,3 +94,6 @@
 [submodule "third_party/uriparser"]
 	path = third_party/uriparser
 	url = https://github.com/uriparser/uriparser.git
+[submodule "third_party/luajit-cmake"]
+	path = third_party/luajit-cmake
+	url = https://github.com/stephenwhittle/luajit-cmake.git

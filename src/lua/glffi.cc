@@ -618,28 +618,28 @@ void PCSX::LuaFFI::open_gl(Lua L) {
     registerAllSymbols(L);
     static int lualoader = 8;
     static const char* glFFI_enum1 = (
-#include "third_party/glffi/glffi-enum1.lua"
+#include "glffi-enum1.lua"
     );
     static const char* glFFI_enum2 = (
-#include "third_party/glffi/glffi-enum2.lua"
+#include "glffi-enum2.lua"
     );
     static const char* glFFI_enum3 = (
-#include "third_party/glffi/glffi-enum3.lua"
+#include "glffi-enum3.lua"
     );
     static const char* glFFI_typedefs = (
-#include "third_party/glffi/glffi-typedefs.lua"
+#include "glffi-typedefs.lua"
     );
     static const char* glFFI_def1 = (
-#include "third_party/glffi/glffi-def1.lua"
+#include "glffi-def1.lua"
     );
     static const char* glFFI_def2 = (
-#include "third_party/glffi/glffi-def2.lua"
+#include "glffi-def2.lua"
     );
     static const char* glFFI_def3 = (
-#include "third_party/glffi/glffi-def3.lua"
+#include "glffi-def3.lua"
     );
     static const char* glFFI_def4 = (
-#include "third_party/glffi/glffi-def4.lua"
+#include "glffi-def4.lua"
     );
     L.load(glFFI_enum1, "third_party:glffi/glffi-enum1.lua");
     L.load(glFFI_enum2, "third_party:glffi/glffi-enum2.lua");
