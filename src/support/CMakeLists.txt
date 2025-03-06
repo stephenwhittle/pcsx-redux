@@ -1,4 +1,6 @@
-target_sources(pcsx-redux PRIVATE
+add_library(support STATIC EXCLUDE_FROM_ALL)
+
+target_sources(support PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}/binpath-linux.cc
 	${CMAKE_CURRENT_LIST_DIR}/binpath-macos.cc
 	${CMAKE_CURRENT_LIST_DIR}/binpath-windows.cc
@@ -18,4 +20,24 @@ target_sources(pcsx-redux PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}/version.cc
 	${CMAKE_CURRENT_LIST_DIR}/zfile.cc
 	${CMAKE_CURRENT_LIST_DIR}/zip.cc
+)
+target_compile_definitions(support PRIVATE
+    ${PCSX_COMMON_DEFINES}
+    -DNOMINMAX
+)
+target_include_directories(support PRIVATE ${PCSX_COMMON_INCLUDES})
+
+target_link_libraries(support PRIVATE
+    avcodec
+    avformat
+    avutil
+    fmt
+    libcurl
+    misc_third_party
+    swresample
+    uv_a
+    zlibstatic
+)
+target_link_libraries(support PUBLIC
+    cq
 )

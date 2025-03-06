@@ -1,4 +1,6 @@
-##### imgui_core
+include(CMakeFolders)
+
+cmake_push_folder("imgui")
 
 add_library(imgui_core STATIC EXCLUDE_FROM_ALL)
 target_sources(imgui_core PRIVATE
@@ -56,3 +58,5 @@ target_include_directories(imgui_md PUBLIC
 	${CMAKE_CURRENT_LIST_DIR}/imgui_md
 )
 target_link_libraries (imgui_md PUBLIC md4c imgui_core)
+
+cmake_pop_folder()

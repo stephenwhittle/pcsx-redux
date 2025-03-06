@@ -1,0 +1,2 @@
+add_library(miniaudio INTERFACE EXCLUDE_FROM_ALL)
+target_include_directories(miniaudio INTERFACE ${CMAKE_CURRENT_LIST_DIR}/miniaudio)

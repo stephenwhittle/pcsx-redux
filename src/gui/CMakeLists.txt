@@ -1,4 +1,6 @@
-target_sources(pcsx-redux PRIVATE
+add_library(gui STATIC)
+
+target_sources(gui PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}/gui.cc
 	${CMAKE_CURRENT_LIST_DIR}/luaimguiextra.cc
 	${CMAKE_CURRENT_LIST_DIR}/luanvg.cc
@@ -32,4 +34,28 @@ target_sources(pcsx-redux PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}/widgets/vram-viewer.cc
 	${CMAKE_CURRENT_LIST_DIR}/widgets/zep-lua.cc
 	${CMAKE_CURRENT_LIST_DIR}/widgets/zep.cc
+)
+
+
+target_compile_definitions(gui PRIVATE
+    ${PCSX_COMMON_DEFINES}
+)
+target_include_directories(gui PRIVATE ${PCSX_COMMON_INCLUDES})
+
+target_link_libraries(gui PRIVATE
+    avcodec
+    capstone
+    gl3w
+    imgui_core
+    imgui_filedialog
+    imgui_md
+    libcurl
+    luajit-5.1
+    misc_third_party
+    support
+    uv_a
+    xbyak
+    Zep
+    zep_extensions
+    zlibstatic
 )

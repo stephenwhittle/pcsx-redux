@@ -1,4 +1,6 @@
-target_sources(pcsx-redux PRIVATE
+add_library(core STATIC)
+
+target_sources(core PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}/arguments.cc
 	${CMAKE_CURRENT_LIST_DIR}/bufferedlog.cc
 	${CMAKE_CURRENT_LIST_DIR}/callstacks.cc
@@ -52,4 +54,27 @@ target_sources(pcsx-redux PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}/DynaRec_x64/regAllocation.cc
 	${CMAKE_CURRENT_LIST_DIR}/DynaRec_x64/symbols.cc
 	${CMAKE_CURRENT_LIST_DIR}/OpenGL_GPU/gpu_opengl.cc
+)
+
+target_compile_definitions(core PRIVATE
+    ${PCSX_COMMON_DEFINES}
+    -DPB_STATIC_API
+)
+target_include_directories(core PRIVATE ${PCSX_COMMON_INCLUDES})
+
+target_link_libraries(core PRIVATE
+    fmt
+    gl3w
+    imgui_core
+    imgui_md
+    libcurl
+    luajit-5.1
+    misc_third_party
+    support
+    uriparser
+    uv_a
+    xbyak
+    zlibstatic
+    Zep
+    zep_extensions
 )

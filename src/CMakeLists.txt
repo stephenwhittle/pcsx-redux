@@ -1,6 +1,20 @@
 
 add_executable(pcsx-redux)
 
+set(PCSX_COMMON_DEFINES
+    -DUNICODE 
+    -D_UNICODE
+    "-DPCSX_SRC_ROOT_DIR=${PCSX_SRC_ROOT_DIR}"
+)
+
+set(PCSX_COMMON_INCLUDES
+    "${CMAKE_CURRENT_LIST_DIR}"
+    "${PCSX_GENERATED_CODE_DIR}"
+)
+
+target_compile_definitions(pcsx-redux PRIVATE ${PCSX_COMMON_DEFINES})
+target_include_directories(pcsx-redux PRIVATE ${PCSX_COMMON_INCLUDES})
+set(CMAKE_FOLDER modules)
 add_subdirectory(cdrom)
 add_subdirectory(core)
 add_subdirectory(gpu)
@@ -10,20 +24,21 @@ add_subdirectory(main)
 add_subdirectory(spu)
 add_subdirectory(support)
 add_subdirectory(supportpsx)
-
+unset(CMAKE_FOLDER)
+# relocate these files so they can be included with a path prefix and not clash with files of similar names in third-party dependencies
 file(COPY ${PCSX_SRC_ROOT_DIR}/AUTHORS DESTINATION ${PCSX_GENERATED_CODE_DIR})
 file(COPY ${PCSX_SRC_ROOT_DIR}/LICENSES.md DESTINATION ${PCSX_GENERATED_CODE_DIR})
 
-target_compile_definitions(pcsx-redux PRIVATE 
-    -DUNICODE 
-    -D_UNICODE
-    -DPCSX_SRC_ROOT_DIR=${PCSX_SRC_ROOT_DIR}
-)
-target_include_directories(pcsx-redux PRIVATE 
-    ${CMAKE_CURRENT_LIST_DIR}
-    ${PCSX_GENERATED_CODE_DIR}
-)
+
 target_link_libraries(pcsx-redux PRIVATE 
+    cdrom
+    core
+    gpu
+    gui
+    pcsx_lua
+    spu
+    support
+    supportpsx
     fmt 
     zlibstatic 
     misc_third_party 

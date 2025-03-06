@@ -1,2 +1,5 @@
+include(CMakeFolders)
+cmake_push_folder("misc")
 add_library(misc_third_party INTERFACE)
 target_include_directories(misc_third_party INTERFACE ${CMAKE_CURRENT_LIST_DIR})
+cmake_pop_folder()
