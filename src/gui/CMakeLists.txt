@@ -45,6 +45,7 @@ target_include_directories(gui PRIVATE ${PCSX_COMMON_INCLUDES})
 target_link_libraries(gui PRIVATE
     avcodec
     capstone
+    core
     gl3w
     imgui_core
     imgui_filedialog

@@ -1,4 +1,5 @@
-
+include(CMakeFolders)
+cmake_push_folder("pcsx-redux")
 add_executable(pcsx-redux)
 
 set(PCSX_COMMON_DEFINES
@@ -8,13 +9,13 @@ set(PCSX_COMMON_DEFINES
 )
 
 set(PCSX_COMMON_INCLUDES
-    "${CMAKE_CURRENT_LIST_DIR}"
+    #"${CMAKE_CURRENT_LIST_DIR}"
     "${PCSX_GENERATED_CODE_DIR}"
 )
 
 target_compile_definitions(pcsx-redux PRIVATE ${PCSX_COMMON_DEFINES})
 target_include_directories(pcsx-redux PRIVATE ${PCSX_COMMON_INCLUDES})
-set(CMAKE_FOLDER modules)
+cmake_push_folder("modules")
 add_subdirectory(cdrom)
 add_subdirectory(core)
 add_subdirectory(gpu)
@@ -24,7 +25,8 @@ add_subdirectory(main)
 add_subdirectory(spu)
 add_subdirectory(support)
 add_subdirectory(supportpsx)
-unset(CMAKE_FOLDER)
+add_subdirectory(mips)
+cmake_pop_folder()
 # relocate these files so they can be included with a path prefix and not clash with files of similar names in third-party dependencies
 file(COPY ${PCSX_SRC_ROOT_DIR}/AUTHORS DESTINATION ${PCSX_GENERATED_CODE_DIR})
 file(COPY ${PCSX_SRC_ROOT_DIR}/LICENSES.md DESTINATION ${PCSX_GENERATED_CODE_DIR})
@@ -39,41 +41,6 @@ target_link_libraries(pcsx-redux PRIVATE
     spu
     support
     supportpsx
-    fmt 
-    zlibstatic 
-    misc_third_party 
-    imgui_core 
-    imgui_md 
-    imgui_filedialog 
-    CURL::libcurl 
-    gl3w 
-    avcodec
-    avutil
-    avformat
-    Zep::Zep 
-    glffi 
-    zep_extensions 
-    zlibffi
-    uriparser
-    ucl
-    elfio
-    libluv_a
-    luajit-5.1
-    uv_a
-    cueparser
-    iec_60908b
-    clip
-    lua_filesystem
-    xbyak
-    lpeg
-    capstone
-    nanovg
-    llhttp
-    multipart_parser
-    lua_protobuf
-    imgui_lua_bindings
-    swresample
-    cq
 )
 if (WIN32)
 
@@ -109,3 +76,4 @@ add_custom_command(TARGET pcsx-redux POST_BUILD
   )
 
 endif()
+cmake_pop_folder()

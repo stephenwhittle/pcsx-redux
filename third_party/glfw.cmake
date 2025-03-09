@@ -14,5 +14,6 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(glfw)
 
-set_target_properties(glfw PROPERTIES FOLDER "third_party")
-set_target_properties(update_mappings PROPERTIES FOLDER "third_party")
+# hack because the GLFW CMake implementation hardcodes a folder value we dont want
+set_target_properties(glfw PROPERTIES FOLDER "third_party/gl")
+set_target_properties(update_mappings PROPERTIES FOLDER "third_party/gl")
