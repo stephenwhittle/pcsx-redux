@@ -42,11 +42,16 @@ extern "C" {
 #include <exception>
 #include <fstream>
 #include <iomanip>
+#include <iostream>
+#include <map>
 #include <numbers>
+#include <sstream>
+#include <string>
 #include <type_traits>
 #include <unordered_set>
 
 #include "clip/clip.h"
+#include "core/bufferedlog.h"
 #include "core/callstacks.h"
 #include "core/cdrom.h"
 #include "core/debug.h"
@@ -113,6 +118,7 @@ void PCSX::GUI::openUrl(std::string_view url) {
     system(cmd.c_str());
 }
 #endif
+#include "iosfwd"
 
 PCSX::GUI::GUI(std::vector<std::string>& favorites)
     : m_listener(g_system->m_eventBus),
@@ -1087,23 +1093,40 @@ void PCSX::GUI::endFrame() {
         } else {
             m_outputShaderEditor.renderWithImgui(this, texture, m_renderSize, logicalRenderSize);
         }
-        
-        ImGui::SetCursorPos(ImVec2{50,50});
+
+        ImGui::SetCursorPos(ImVec2{50, 50});
         ImGui::PushStyleColor(ImGuiCol_ChildBg, 0x10000000);
-        if (ImGui::BeginChild("BufferedLog", ImVec2{320, 320}, ImGuiChildFlags_None, ImGuiWindowFlags_NoScrollbar))
-        {
-            
+        if (ImGui::BeginChild("BufferedLog", ImVec2{320, 320}, ImGuiChildFlags_None, ImGuiWindowFlags_NoScrollbar)) {
+            std::size_t Avail = g_emulator->m_logBuffer->avail();
+            if (Avail) {
+                std::string ReadData{};
+                ReadData.reserve(Avail);
+                g_emulator->m_logBuffer->read(std::span<char>(ReadData.data(), Avail));
+                std::vector<std::string> lines;
+                std::istringstream ss (std::string(ReadData.data(), Avail));
+                std::string line;
+                std::size_t Length = 0;
+                while (std::getline(ss, line, '\0'))
+                {
+                    Length += (line.length() +1);
+                    lines.push_back(line);
+                }
+                g_emulator->m_logBuffer->consume(Length);
+                for (std::string line : lines) {
+                    m_osLogger.addLog(std::move(line));
+                }
+            }
+            m_osLogger.draw();
         }
         ImGui::EndChild();
-        ImGui::SetCursorPos(ImGui::GetWindowSize() - ImVec2{325,325});
-        if (ImGui::BeginChild("ChartRegion", ImVec2{320, 320}, ImGuiChildFlags_None, ImGuiWindowFlags_NoScrollbar))
-        {
-            //ImGui::TextUnformatted("Placeholder text for chart area");
+        ImGui::SetCursorPos(ImGui::GetWindowSize() - ImVec2{325, 325});
+        if (ImGui::BeginChild("ChartRegion", ImVec2{320, 320}, ImGuiChildFlags_None, ImGuiWindowFlags_NoScrollbar)) {
+            // ImGui::TextUnformatted("Placeholder text for chart area");
         }
         ImGui::EndChild();
-        
+
         ImGui::PopStyleColor();
-        
+
         ImGui::End();
         ImGui::PopStyleVar(2);
     } else {

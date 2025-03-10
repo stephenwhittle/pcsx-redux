@@ -21,6 +21,7 @@ namespace PCSX {
 		void setAddress(uint32_t bufPtr);
 		uint32_t avail() const;
 		uint32_t read(std::span<char> destBuf);
+        void consume(uint32_t count);
 	};
 	
 }

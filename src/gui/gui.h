@@ -65,6 +65,7 @@
 #include "support/version.h"
 #include "widgets/memory_observer.h"
 #include "widgets/typed_debugger.h"
+#include "widgets/onscreenlog.h"
 
 #if defined(__APPLE__)
 #define GL_SHADER_VERSION "#version 410\n"
@@ -409,7 +410,8 @@ class GUI final : public UI {
     Widgets::SIO1 m_sio1 = {settings.get<ShowSIO1>().value};
 
     Widgets::GPULogger m_gpuLogger{settings.get<ShowGPULogger>().value};
-
+    
+    Widgets::OnScreenLog m_osLogger {};
     EventBus::Listener m_listener;
 
   public:
