@@ -24,7 +24,6 @@ uint32_t PCSX::BufferedLog::avail() const {
         }
         return 0;
     }
-    // need to check if read has exceeded written before this
     return m_bufferState->m_written - m_bufferState->m_read;
 }
 

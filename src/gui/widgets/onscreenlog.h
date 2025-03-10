@@ -29,6 +29,8 @@ namespace PCSX {
 class GUI;
 namespace Widgets {
 
+/// @brief Simple wrapper around a list of log messages with a specific expiry
+/// New messages appear at the top of the list and will be removed once they expire
 class OnScreenLog {
     struct LogEntry {
         double elapsed;
